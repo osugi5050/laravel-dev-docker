@@ -1,0 +1,8 @@
+server/vendor/
+docker/db/
+
+# IDE
+.idea
+
+# OS
+.DS_Store
