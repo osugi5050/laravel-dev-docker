@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Menu;
 class MenusController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class MenusController extends Controller
      */
     public function index()
     {
-        //
+        $menus = Menu::all();
+        return view('menus.index', ['menus' => $menus]);
     }
 
     /**
@@ -23,7 +25,7 @@ class MenusController extends Controller
      */
     public function create()
     {
-        //
+        return view('menus.create');
     }
 
     /**
@@ -34,8 +36,11 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $menu = new Menu();
+        $menu->name = $request->name;
+        $menu->body = $request->body;
+        $menu->save();
+        return redirect('menus');    }
 
     /**
      * Display the specified resource.
@@ -45,7 +50,8 @@ class MenusController extends Controller
      */
     public function show($id)
     {
-        //
+        $menu = Menu::find($id);
+        return view('menus.show', ['menu' => $menu]);
     }
 
     /**
@@ -56,7 +62,8 @@ class MenusController extends Controller
      */
     public function edit($id)
     {
-        //
+        $menu = Menu::find($id);
+        return view('menus.edit', ['menu' => $menu]);
     }
 
     /**
@@ -68,7 +75,11 @@ class MenusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $menu = Menu::find($id);
+        $menu->name = $request->name;
+        $menu->body = $request->body;
+        $menu->save();
+        return redirect("/menus/".$id);
     }
 
     /**
@@ -79,6 +90,8 @@ class MenusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $menu = Menu::find($id);
+        $menu->delete();
+        return redirect('menus');
     }
 }
